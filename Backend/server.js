@@ -1,5 +1,15 @@
-const express = require('express');
+const express = require("express");
+const mysql = require("mysql")
+
 const app = express();
+
+// MySQL connection
+const connection = mysql.createConnection( {
+    host: '',
+    user: '',
+    password: '',
+    database: '',
+});
 
 app.get('/', (req, res) => {
     res.send('Hello, World!');
