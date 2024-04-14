@@ -19,11 +19,13 @@ connection.connect((error) => {
 app.get('/', (req, res) => {
     const query = "SELECT * FROM weathersense_gather";
     connection.query(query, (error, results, fields) => {
+
         if (error) {
             console.log("Error executing query:", error);
             res.status(500).json({ error: "Error executing query" });
             return null;
         }
+
         res.json(results);
     });
 });
