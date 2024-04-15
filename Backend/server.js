@@ -3,6 +3,7 @@ const express = require("express");
 const mysql = require("mysql");
 const config = require("./config");
 const axios = require("axios");
+const moment = require("moment-timezone");
 
 const app = express();
 
@@ -18,7 +19,9 @@ connection.connect((error) => {
 
 // Function.
 function loadUnPredictData(callback) {
-    const query = "SELECT * FROM weathersense_gather";
+    const query = "SELECT *\n" +
+        "FROM weathersense_gather\n" +
+        "WHERE ts NOT IN (SELECT ts FROM weathersense_hist);\n";
     connection.query(query, (error, results, fields) => {
         if (error) {
             console.log("Error executing query:", error);
@@ -36,25 +39,56 @@ function predictAndSaveData() {
             return null;
         }
         // Handle results
-        // Sent data to ModelAPI-server
-        axios.post(config.modelPath.predictPath, results)
-            .then((response) => {
-                // Handle successful response
-                console.log('Predicted response:', response.data);
-                // Add this line to print the JSON result from the ModelAPI
-                console.log('ModelAPI JSON result:', response.data);
-            })
-            .catch((error) => {
-                // Handle error
-                console.error('Error:', error);
-            });
+        if (results && results.length > 0) {
+            // Sent data to ModelAPI-server
+            axios.post(config.modelPath.predictPath, results)
+                .then((response) => {
+                    // Add this line to print the JSON result from the ModelAPI
+                    console.log('ModelAPI JSON result:', response.data);
+                    // Format the datetime strings
+                    const formattedResults = response.data.map(entry => {
+                        // Parse the datetime string
+                        const ts = new Date(entry.ts);
+                        // Format the datetime string as 'YYYY-MM-DD HH:MM:SS'
+                        const formattedTs = ts.toISOString().slice(0, 19).replace('T', ' ');
+                        return { ...entry, ts: formattedTs };
+                    });
+                    // Insert the data into the weathersense_hist table
+                    const insertQuery = "INSERT INTO weathersense_hist (ts, temp_sensor, humidity_sensor, temp_api, humidity_api, pressure, wind_speed, cloudiness, weather, weather_pred) VALUES ?";
+                    const dataValues = response.data.map(entry => [
+                        moment(entry.ts).tz('Asia/Bangkok').format('YYYY-MM-DD HH:mm:ss'), // Convert to Thai time (GMT+7)
+                        entry.temp_sensor,
+                        entry.humidity_sensor,
+                        entry.temp_api,
+                        entry.humidity_api,
+                        entry.pressure,
+                        entry.wind_speed,
+                        entry.cloudiness,
+                        entry.weather,
+                        entry.weather_pred
+                    ]);
 
+                    connection.query(insertQuery, [dataValues], (insertError, insertResults) => {
+                        if (insertError) {
+                            console.error("Error inserting data into weathersense_hist:", insertError);
+                            return;
+                        }
+                        console.log("Data inserted into weathersense_hist:", insertResults);
+                    });
+                })
+                .catch((error) => {
+                    // Handle error
+                    console.error('Error:', error);
+                });
+        }else {
+            console.log("All data have been predicted successfully.")
+        }
     });
 }
 
 // Route or Path.
 app.get('/', (req, res) => {
-    const query = "SELECT * FROM weathersense_gather";
+    const query = "SELECT * FROM weathersense_hist";
     connection.query(query, (error, results, fields) => {
 
         if (error) {
