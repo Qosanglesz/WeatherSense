@@ -1,10 +1,11 @@
 // import library and config files.
 const express = require("express");
 const mysql = require("mysql");
-const config = require("./config");
 const axios = require("axios");
 const moment = require("moment-timezone");
+const config = require("./config");
 
+// Init express app.
 const app = express();
 
 // MySQL connection.
@@ -43,8 +44,6 @@ function predictAndSaveData() {
             // Sent data to ModelAPI-server
             axios.post(config.modelPath.predictPath, results)
                 .then((response) => {
-                    // Add this line to print the JSON result from the ModelAPI
-                    console.log('ModelAPI JSON result:', response.data);
                     // Format the datetime strings
                     const formattedResults = response.data.map(entry => {
                         // Parse the datetime string
@@ -80,15 +79,33 @@ function predictAndSaveData() {
                     // Handle error
                     console.error('Error:', error);
                 });
-        }else {
-            console.log("All data have been predicted successfully.")
         }
     });
 }
 
 // Route or Path.
-app.get('/', (req, res) => {
-    const query = "SELECT * FROM weathersense_hist";
+app.get('/latest', (req, res) => {
+    // Update table weathersense_hist table.
+    predictAndSaveData();
+
+    const query = "SELECT * FROM weathersense_hist ORDER BY ts DESC LIMIT 1";
+    connection.query(query, (error, results, fields) => {
+
+        if (error) {
+            console.log("Error executing query:", error);
+            res.status(500).json({ error: "Error executing query" });
+            return null;
+        }
+
+        res.json(results);
+    });
+});
+
+app.get('/history', (req, res) => {
+    // Update table weathersense_hist table.
+    predictAndSaveData();
+
+    const query = "SELECT * FROM weathersense_hist ORDER BY ts DESC";
     connection.query(query, (error, results, fields) => {
 
         if (error) {
