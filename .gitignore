@@ -162,3 +162,4 @@ Backend/config.js
 
 # node_module
 .Backend/node_modules/
+node_modules/
