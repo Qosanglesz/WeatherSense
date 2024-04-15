@@ -9,5 +9,8 @@ module.exports = {
         database: 'Your database.',
         port: 'Your database port.',
     },
+    modelPath: {
+        predictPath: 'Path.'
+    }
 
 };
