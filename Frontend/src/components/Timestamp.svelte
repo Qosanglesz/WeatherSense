@@ -1,5 +1,6 @@
 <script>
     export let timestamp;
+    export let prefix;
 
     // Create a Date object from the timestamp string
     const dateObject = new Date(timestamp);
@@ -16,7 +17,7 @@
 
     // Format the date according to the specified timezone
     const formattedDateTime = dateObject.toLocaleString('en-US', options);
-    const context = `Latest update on ${formattedDateTime}`
+    const context = `${prefix} ${formattedDateTime}`
 </script>
 
 <div>

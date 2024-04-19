@@ -1,10 +1,10 @@
 <script>
-    import Timestamp from "../components/Timestamp.svelte";
+    import Timestamp from "../../../components/Timestamp.svelte";
 
     export let data;
-    import Card from "../components/Card.svelte";
-    let weather = data.weather[0];
-    const prefix = 'Latest update on'
+    import Card from "../../../components/Card.svelte";
+    let weather = data.weather;
+    const prefix = 'This data from'
 
 </script>
 

@@ -25,8 +25,7 @@
         <div class="mx-auto bg-white shadow-md rounded-lg overflow-hidden">
             <div class="px-4 py-5 flex justify-between">
                 <p class="text-gray-800 text-xl pt-3 font-bold">{context}</p>
-                <!-- Styled Button -->
-                <a href="/" class="inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300">View</a>
+                <a href={link} class="inline-block bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-900 transition duration-300">View</a>
             </div>
         </div>
     </div>
