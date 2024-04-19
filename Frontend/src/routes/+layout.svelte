@@ -4,7 +4,7 @@
     let link = {
         home: "/",
         github: "https://github.com/Qosanglesz/WeatherSense",
-        service: "#",
+        history: "history",
         contact: "https://github.com/Qosanglesz"
     };
 
