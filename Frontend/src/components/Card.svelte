@@ -3,7 +3,7 @@
     export let value;
 </script>
 
-<div class="bg-gray-100">
+<div class="">
 <div class="container mx-auto mt-4">
     <div class=" mx-auto bg-white shadow-md rounded-lg overflow-hidden">
         <div class="px-4 py-5">
