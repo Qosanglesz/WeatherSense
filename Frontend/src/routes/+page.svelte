@@ -1,14 +1,14 @@
 <script>
+    import Timestamp from "../components/Timestamp.svelte";
+
     export let data;
     import Card from "../components/Card.svelte";
-    import Navbar from "../components/Navbar.svelte";
-
-    let link = {};
     let weather = data.weather[0];
 
 </script>
 
-<Navbar link={link}/>
+
+<Timestamp timestamp={weather.ts}/>
 
 <div class="mx-4">
     <div class="grid grid-cols-2 gap-4">
