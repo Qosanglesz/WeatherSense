@@ -118,6 +118,29 @@ app.get('/history', (req, res) => {
     });
 });
 
+app.get('/weather/:id', (req, res) => {
+    const id = req.params.id;
+
+    // Update table weathersense_hist table.
+    predictAndSaveData();
+
+    const query = "SELECT * FROM weathersense_hist WHERE id = ?";
+    connection.query(query, [id], (error, results, fields) => {
+        if (error) {
+            console.log("Error executing query:", error);
+            res.status(500).json({ error: "Error executing query" });
+            return;
+        }
+
+        if (results.length === 0) {
+            res.status(404).json({ error: "Weather data not found" });
+            return;
+        }
+
+        res.json(results[0]);
+    });
+});
+
 app.listen(config.port, () => {
     console.log(`Server is running on http://localhost:${config.port}`);
 });
