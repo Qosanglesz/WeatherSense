@@ -1,5 +1,6 @@
 <script>
     export let timestamp;
+    export let link;
 
     // Create a Date object from the timestamp string
     const dateObject = new Date(timestamp);
@@ -22,8 +23,10 @@
 <div>
     <div class="mx-4 mt-4">
         <div class="mx-auto bg-white shadow-md rounded-lg overflow-hidden">
-            <div class="px-4 py-5">
+            <div class="px-4 py-5 flex justify-between">
                 <p class="text-gray-800 text-xl pt-3 font-bold">{context}</p>
+                <!-- Styled Button -->
+                <a href="/" class="inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300">View</a>
             </div>
         </div>
     </div>
