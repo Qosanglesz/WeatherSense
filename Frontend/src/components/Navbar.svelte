@@ -11,16 +11,16 @@
         <!-- Navigation Links -->
         <ul class="flex space-x-4 text-xl">
             <li>
-                <a href="{link}" class="text-white hover:text-gray-300">Home</a>
+                <a href="{link.home}" class="text-white hover:text-gray-300">Home</a>
             </li>
             <li>
-                <a href="{link}" class="text-white hover:text-gray-300">About</a>
+                <a href="{link.github}" class="text-white hover:text-gray-300">Github</a>
             </li>
             <li>
-                <a href="{link}" class="text-white hover:text-gray-300">Services</a>
+                <a href="{link.service}" class="text-white hover:text-gray-300">Services</a>
             </li>
             <li>
-                <a href="{link}" class="text-white hover:text-gray-300">Contact</a>
+                <a href="{link.contact}" class="text-white hover:text-gray-300">Contact</a>
             </li>
         </ul>
     </div>
