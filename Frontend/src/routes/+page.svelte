@@ -4,7 +4,10 @@
     export let data;
     import Card from "../components/Card.svelte";
     let weather = data.weather[0];
-    const prefix = 'Latest update on'
+    const prefix = 'Latest update on';
+
+    let temp_error = ((Math.abs(weather.temp_sensor - weather.temp_api)/weather.temp_api) * 100).toFixed(2);
+    let humidity_error = ((Math.abs(weather.humidity_sensor - weather.humidity_api)/weather.humidity_api) * 100).toFixed(2);
 
 </script>
 
@@ -18,12 +21,12 @@
     <div class="grid grid-cols-3 gap-4">
         <Card title="Temperature WeatherSense" value={`${weather.temp_sensor} °C`}/>
         <Card title="Temperature OpenWeatherMap" value={`${weather.temp_api} °C`}/>
-        <Card title="Pressure" value={`${weather.pressure} Hectopascal`}/>
+        <Card title="Temperature Percentage Error" value={`${temp_error} Percent`}/>
         <Card title="Humidity WeatherSense" value={`${weather.humidity_sensor} Percent`}/>
         <Card title="Humidity OpenWeatherMap" value={`${weather.humidity_api} Percent`}/>
-        <Card title="Wind Speed" value={`${weather.wind_speed} m/s`}/>
+        <Card title="Humidity Percentage Error" value={`${humidity_error} Percent`}/>
         <Card title="Cloudiness" value={`${weather.cloudiness} Percent`}/>
-        <Card title="API" value="30 degree Celsius"/>
-        <Card title="API" value="30 degree Celsius"/>
+        <Card title="Pressure" value={`${weather.pressure} Hectopascal`}/>
+        <Card title="Wind Speed" value={`${weather.wind_speed} m/s`}/>
     </div>
 </div>
