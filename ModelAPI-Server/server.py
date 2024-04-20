@@ -1,29 +1,12 @@
-from flask import Flask, request, jsonify
-import pandas as pd
-import joblib
 import json
+import pandas as pd
 
-# Paths to the trained model and label encoder files
-MODEL_PATH = "path/to/your/model.pkl"
-LABEL_ENCODER_PATH = "path/to/your/label_encoder.pkl"
+from flask import Flask, request
+from preprocessing_functions import *
+
 
 # Initialize Flask application
 app = Flask(__name__)
-
-# Load the trained model and label encoder
-model = joblib.load(MODEL_PATH)
-label_encoder = joblib.load(LABEL_ENCODER_PATH)
-
-# Function to transform timestamp data
-def time_stamp_transform(dataframe):
-    # Convert 'ts' column to datetime
-    dataframe['ts'] = pd.to_datetime(dataframe['ts'])
-    # Extract day of the week, month, and hour from timestamp
-    dataframe['day_of_week'] = dataframe['ts'].dt.dayofweek
-    dataframe['month'] = dataframe['ts'].dt.month
-    dataframe['hour'] = dataframe['ts'].dt.hour
-    # Drop 'weather' and 'ts' columns as they are no longer needed
-    dataframe.drop(["weather", "ts"], axis=1, inplace=True)
 
 # API endpoint for making predictions
 @app.route('/predict', methods=['POST'])
@@ -39,11 +22,11 @@ def predict():
     to_predict = df.copy()
 
     # Transform timestamp data
-    time_stamp_transform(to_predict)
+    preprocessing(to_predict)
 
     # Make predictions using the model
-    predictions_encoded = model.predict(to_predict)
-    predictions = label_encoder.inverse_transform(predictions_encoded)
+    predictions_encoded = RANDOM_FOREST_MODEL.predict(to_predict)
+    predictions = LABLE_ENCODER_MODEL.inverse_transform(predictions_encoded)
 
     # Add predicted weather to DataFrame
     df["weather_pred"] = predictions
