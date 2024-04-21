@@ -19,8 +19,14 @@ test("should allow users go weather page (valid ID)", async () => {
     expect(response.status).toBe(200);
 });
 
-/*test("should not allow users go history page (invalid ID)", async () => {
+test("should not allow users to go to history page with invalid ID", async () => {
     const id = -99;
-    const response = await axios.get(`/weather/${id}`);
-    expect(response.status).toBe(200);
-});*/
+    try {
+
+        const response = await axios.get(`${backendRoutes.getWeatherById}${id}`);
+        expect(response.status).not.toBe(200);
+
+    } catch (error) {
+        expect(error.response.status).toBe(404);
+    }
+});
