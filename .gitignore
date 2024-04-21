@@ -163,3 +163,4 @@ Backend/config.js
 # node_module
 .Backend/node_modules/
 node_modules/
+./Frontend/src/config.js
