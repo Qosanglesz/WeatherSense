@@ -1,8 +1,9 @@
 import axios from "axios";
+import {backendRoutes} from "../../config.js";
 
 export async function load() {
     try {
-        const response = await axios.get("http://localhost:3000/history")
+        const response = await axios.get(backendRoutes.getHistory)
 
         if (response.data) {
             return {
