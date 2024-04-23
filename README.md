@@ -58,11 +58,14 @@ The system corrects data using the Ky-015 sensor and integrates with the OpenWea
   - /weather/id : (GET) Web show dashboard latest weather data by id.
 
 ## How to run test
-1. Frontend:
+1. ## Frontend:
 
    ```
    cd ./Frontend
    npm run test:ui
    npx playwright test --project=chromium
    ```
+1. ## Backend:
+   - Test with post man to each endpoint [PostmanTestCode](https://github.com/Qosanglesz/WeatherSense/wiki/Postman-Test-code)
+
   
