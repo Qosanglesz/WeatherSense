@@ -22,7 +22,7 @@ def predict():
     to_predict = df.copy()
 
     # Transform timestamp data
-    preprocessing(to_predict)
+    to_predict = preprocessing(to_predict)
 
     # Make predictions using the model
     predictions_encoded = RANDOM_FOREST_MODEL.predict(to_predict)

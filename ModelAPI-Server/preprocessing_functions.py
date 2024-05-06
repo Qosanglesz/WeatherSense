@@ -3,8 +3,8 @@ import joblib
 
 RANDOM_FOREST_MODEL = joblib.load(".\my-model\model.pkl")
 LABLE_ENCODER_MODEL = joblib.load(".\my-model\label_encoder_model.pkl")
-MIN_MAX_SCALER_MODEL = joblib.load(".\my-model\min_max_scaler_model.pkl")
-
+STANDARD_SCALER_MODEL = joblib.load(".\my-model\standard_scaler_model.pkl")
+PCA_MODEL = joblib.load(".\my-model\pca_model.pkl")
 
 def convert_timestamp(dataframe):
     dataframe["ts"] = pd.to_datetime(dataframe["ts"])
@@ -17,5 +17,7 @@ def convert_timestamp(dataframe):
 def preprocessing(dataframe):
     convert_timestamp(dataframe=dataframe)
     dataframe.drop("weather", axis=1, inplace=True)
-    dataframe = MIN_MAX_SCALER_MODEL.transform
-    
+    dataframe = STANDARD_SCALER_MODEL.transform(dataframe)
+    dataframe = PCA_MODEL.transform(dataframe)
+    dataframe = pd.DataFrame(dataframe)
+    return dataframe
