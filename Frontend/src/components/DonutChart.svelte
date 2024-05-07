@@ -47,7 +47,7 @@
 <div class="">
     <div class="container mx-auto mt-4">
         <div class=" mx-auto bg-white shadow-md rounded-lg overflow-hidden">
-            <div class="px-4 py-5">
+            <div class="px-4 py-5 size-1/3 justify-center mx-80">
                 <h2 class="text-2xl font-bold text-gray-800">{name}</h2>
                 <Doughnut {data} options={{ responsive: true }} />
             </div>

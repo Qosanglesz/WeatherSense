@@ -10,12 +10,19 @@
     import Histogram from "../../components/Histogram.svelte";
     import TimestampHistory from "../../components/TimestampHistory.svelte";
     import DonutChart from "../../components/DonutChart.svelte";
+    import CountPlot from "../../components/CountPlot.svelte";
+    import ScatterPlot from "../../components/ScatterPlot.svelte";
+    import Footer from "../../components/Footer.svelte";
 
 </script>
 
 <div class="grid grid-cols-2 gap-2">
-    <DonutChart name="WeatherSense" dataArray={data.mergedData.weather_pred}/>
-    <DonutChart name="OpenWeatherAPI" dataArray={data.mergedData.weather}/>
+    <div >
+        <DonutChart name="WeatherSense" dataArray={data.mergedData.weather_pred}/>
+    </div>
+    <div>
+        <DonutChart name="OpenWeatherAPI" dataArray={data.mergedData.weather}/>
+    </div>
 </div>
 
 <div class="grid grid-cols-4 gap-2">
@@ -26,7 +33,15 @@
     <Histogram name="Humidity API Percent" dataArray={data.mergedData.humidity_api} rangeLabel={data.rangeLabel.commonPercent}/>
     <Histogram name="Wind Speed m/s" dataArray={data.mergedData.wind_speed} rangeLabel={data.rangeLabel.windSpeed}/>
     <Histogram name="Pressure HectoPascal" dataArray={data.mergedData.pressure} rangeLabel={data.rangeLabel.pressure}/>
+    <ScatterPlot name="Temperature&Humidity Scatter" dataDict={data.humiditySensorVsAPI}/>
 </div>
 
-
-<LineChart name="Temperature From API"  dataArray={data.mergedData.temp_sensor}/>
+<div class="grid grid-cols-3 gap-2">
+    <CountPlot name="Day of Week Average Temperature Sensor" dataDict={data.dayOfWeekAverageTempSensor}/>
+    <ScatterPlot name="WeatherSense Vs OpenWeather Temperature" dataDict={data.temperatureSensorVsAPI}/>
+    <CountPlot name="Day of Week Average Temperature API" dataDict={data.dayOfWeekAverageTempAPI}/>
+    <CountPlot name="Day of Week Average Humidity Sensor" dataDict={data.dayOfWeekAverageHumiditySensor}/>
+    <ScatterPlot name="WeatherSense Vs OpenWeather Humidity" dataDict={data.humiditySensorVsAPI}/>
+    <CountPlot name="Day of Week Average Humidity API" dataDict={data.dayOfWeekAverageHumidityAPI}/>
+</div>
+<Footer/>
