@@ -37,6 +37,9 @@
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.15",
     "axios": "^1.6.8",
-    "react-circular-progressbar": "^2.1.0"
+    "chart.js": "^4.4.2",
+    "plotly.js-dist": "^2.32.0",
+    "react-circular-progressbar": "^2.1.0",
+    "svelte-chartjs": "^3.1.5"
   }
 }

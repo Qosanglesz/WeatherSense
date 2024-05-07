@@ -5,7 +5,7 @@
 <nav class="bg-gray-800 p-4">
     <div class="max-w-7xl mx-auto flex justify-between items-center">
         <!-- Logo -->
-        <div class="text-white font-bold text-3xl">
+        <div class="text-white font-bold text-3xl flex">
             WeatherSense
         </div>
         <!-- Navigation Links -->
@@ -21,6 +21,12 @@
             </li>
             <li>
                 <a href="{link.contact}" class="text-white hover:text-gray-300">Contact</a>
+            </li>
+            <li>
+                <a href="{link.visualize}" class="text-white hover:text-gray-300
+                bg-blue-900 p-3 rounded hover:bg-blue-950">
+                    Data Visualize
+                </a>
             </li>
         </ul>
     </div>
