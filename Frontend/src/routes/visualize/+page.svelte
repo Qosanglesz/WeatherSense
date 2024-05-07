@@ -9,8 +9,14 @@
     import LineChart from "../../components/LineChart.svelte";
     import Histogram from "../../components/Histogram.svelte";
     import TimestampHistory from "../../components/TimestampHistory.svelte";
+    import DonutChart from "../../components/DonutChart.svelte";
 
 </script>
+
+<div class="grid grid-cols-2 gap-2">
+    <DonutChart name="WeatherSense" dataArray={data.mergedData.weather_pred}/>
+    <DonutChart name="OpenWeatherAPI" dataArray={data.mergedData.weather}/>
+</div>
 
 <div class="grid grid-cols-4 gap-2">
     <Histogram name="Temperature Sensor °C" dataArray={data.mergedData.temp_sensor} rangeLabel={data.rangeLabel.temp}/>

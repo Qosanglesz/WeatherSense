@@ -65,6 +65,7 @@
         ],
     };
 </script>
+
 <div class="">
     <div class="container mx-auto mt-4">
         <div class=" mx-auto bg-white shadow-md rounded-lg overflow-hidden">
