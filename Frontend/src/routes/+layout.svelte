@@ -5,7 +5,8 @@
         home: "/",
         github: "https://github.com/Qosanglesz/WeatherSense",
         history: "history",
-        contact: "https://github.com/Qosanglesz"
+        contact: "https://github.com/Qosanglesz",
+        visualize: "visualize"
     };
 
 </script>
