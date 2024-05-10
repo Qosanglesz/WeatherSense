@@ -1,0 +1,320 @@
+[
+    {
+        "id": "ffd7e8a34bd6a80c",
+        "type": "tab",
+        "label": "WeatherSense",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5c2688a2e343abbb",
+        "type": "inject",
+        "z": "ffd7e8a34bd6a80c",
+        "name": "1 Hour",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b6f23ad7aa528a56",
+        "type": "http request",
+        "z": "ffd7e8a34bd6a80c",
+        "name": "weathermap.org",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.openweathermap.org/data/2.5/weather?q=Chatuchak&appid=766caca7383ee1cea195a0b6c01206f7&units=metric",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 320,
+        "y": 160,
+        "wires": [
+            [
+                "f4df78d360177044",
+                "89e4c8bec49a8841"
+            ]
+        ]
+    },
+    {
+        "id": "f4df78d360177044",
+        "type": "debug",
+        "z": "ffd7e8a34bd6a80c",
+        "name": "debug api call",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "fb162e7788c35f5f",
+        "type": "template",
+        "z": "ffd7e8a34bd6a80c",
+        "name": "weathersense_gather",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "INSERT INTO weathersense_gather (\n    temp_sensor, \n    humidity_sensor, \n    temp_api, \n    humidity_api, \n    pressure, \n    wind_speed, \n    cloudiness, \n    weather)\nVALUES (\n    {{payload.temp_sensor}},\n    {{payload.humidity_sensor}},\n    {{payload.temp_api}},\n    {{payload.humidity_api}},\n    {{payload.pressure}},\n    {{payload.wind_speed}},\n    {{payload.cloudiness}},\n    '{{payload.weather}}'\n);",
+        "output": "str",
+        "x": 780,
+        "y": 240,
+        "wires": [
+            [
+                "a3ba342073473a89",
+                "04a02409e98c8d28"
+            ]
+        ]
+    },
+    {
+        "id": "a3ba342073473a89",
+        "type": "debug",
+        "z": "ffd7e8a34bd6a80c",
+        "name": "debug SQL Query",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1070,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "04a02409e98c8d28",
+        "type": "mysql",
+        "z": "ffd7e8a34bd6a80c",
+        "mydb": "61701fbe78e36e36",
+        "name": "MySQL",
+        "x": 1000,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ddd578073f322d90",
+        "type": "function",
+        "z": "ffd7e8a34bd6a80c",
+        "name": "Set Attributes",
+        "func": "var attributes = {\n    temp_sensor: msg.payload[0].temperature,\n    humidity_sensor: msg.payload[0].humidity,\n    temp_api: msg.payload[1].main.temp,\n    humidity_api: msg.payload[1].main.humidity,\n    pressure: msg.payload[1].main.pressure,\n    wind_speed: msg.payload[1].wind.speed,\n    cloudiness: msg.payload[1].clouds.all,\n    weather: msg.payload[1].weather[0].main\n}\n\nmsg.payload = attributes;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 240,
+        "wires": [
+            [
+                "5833da5dd8a2da40",
+                "fb162e7788c35f5f"
+            ]
+        ]
+    },
+    {
+        "id": "5833da5dd8a2da40",
+        "type": "debug",
+        "z": "ffd7e8a34bd6a80c",
+        "name": "debug function",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "2a4dab148d8b5144",
+        "type": "inject",
+        "z": "ffd7e8a34bd6a80c",
+        "name": "Jumlong",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"temp_sensor\":69.69,\"humidity_sensor\":69.69}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "89e4c8bec49a8841",
+        "type": "join",
+        "z": "ffd7e8a34bd6a80c",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "pa",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 370,
+        "y": 240,
+        "wires": [
+            [
+                "ddd578073f322d90",
+                "5fbe897064d21791"
+            ]
+        ]
+    },
+    {
+        "id": "5fbe897064d21791",
+        "type": "debug",
+        "z": "ffd7e8a34bd6a80c",
+        "name": "debug join",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "88da058966a02f4c",
+        "type": "mqtt in",
+        "z": "ffd7e8a34bd6a80c",
+        "name": "",
+        "topic": "b6510545748/sensors",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "87d26882103608db",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 120,
+        "y": 220,
+        "wires": [
+            [
+                "0d2a51cd4ccf6419",
+                "b6f23ad7aa528a56",
+                "89e4c8bec49a8841"
+            ]
+        ]
+    },
+    {
+        "id": "0d2a51cd4ccf6419",
+        "type": "debug",
+        "z": "ffd7e8a34bd6a80c",
+        "name": "debug sensors",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 340,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "61701fbe78e36e36",
+        "type": "MySQLdatabase",
+        "name": "Kasetsart",
+        "host": "iot.cpe.ku.ac.th",
+        "port": "3306",
+        "db": "b6510545721",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "87d26882103608db",
+        "type": "mqtt-broker",
+        "name": "KU Meng",
+        "broker": "iot.cpe.ku.ac.th",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
