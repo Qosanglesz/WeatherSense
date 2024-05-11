@@ -2,7 +2,7 @@
 
 ## Team members
 1.  Wissarut Kanasub 6510545721 Software and Knowledge Engineering student
-2.  sukprachoke Leelapisuth 6510545748 Software and Knowledge Engineering student
+2.  Sukprachoke Leelapisuth 6510545748 Software and Knowledge Engineering student
 
 ## Overview
  WeatherSense is a weather tracking website that updates weather data and classification every 10 minutes. Leveraging our trained random forest classification model, WeatherSense provides accurate classification and historical weather information.
