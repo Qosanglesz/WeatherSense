@@ -87,6 +87,7 @@
 
 3. ### Running Backend Server
     - Note: For MySQL data you can use data in "./Backend/DataSQl"
+    - If you not have existing MySQL server you can also use MAMP to create Local MySQL server by this [following step](https://courses.cs.washington.edu/courses/cse154/19sp/resources/assets/servers/mamp_mysql.html)
    ```js
    cd ./Backend
    ```
