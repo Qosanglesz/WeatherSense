@@ -86,8 +86,9 @@
    ```
 
 3. ### Running Backend Server
+    - Note: For MySQL data you can use data in "./Backend/DataSQl"
    ```js
-   cd ./Frontend
+   cd ./Backend
    ```
    Create config.js by using config.example.js
    ```js
@@ -115,7 +116,7 @@
    ```
 4. ### Running Frontend Server
     ```js
-   cd ./Backend
+   cd ./Frontend
    ```
    Create config.js by using config.example.js in "./Frontend/src" Example below
    ```js
